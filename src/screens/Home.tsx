@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Button, StyleSheet, Text, TextInput, View } from "react-native"
 
-const HomeScreen = () => {
+const HomeScreen = ({ navigation }: any) => {
 
     const [searchInput, setSearchInput] = useState('');
 
@@ -24,7 +24,10 @@ const HomeScreen = () => {
                 <Button title="Cerca" onPress={handleSearch} />
             </View>
             <View style={styles.findAllContainer}>
-                <Button title="Trova tutti gli utenti" onPress={handleFindAllUsers} />
+                <Button title="Trova tutti gli utenti" onPress={() =>
+                    navigation.navigate("Users")
+                }
+                />
             </View>
         </View>
     )
@@ -50,7 +53,7 @@ const styles = StyleSheet.create({
         width: '100%'
     },
     findAllContainer: {
-        width: '80%', 
+        width: '80%',
         marginTop: 20,
     },
 

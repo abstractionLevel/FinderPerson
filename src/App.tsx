@@ -27,6 +27,7 @@ import {
 	ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 import HomeScreen from './screens/Home';
+import Users from './screens/Users';
 
 type SectionProps = PropsWithChildren<{
 	title: string;
@@ -74,6 +75,10 @@ function App(): React.JSX.Element {
 					name="Home"
 					component={HomeScreen}
 					options={{ title: 'Welcome' }}
+				/>
+				<Stack.Screen
+					name="Users"
+					component={Users}
 				/>
 			</Stack.Navigator>
 		</NavigationContainer>
