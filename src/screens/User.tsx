@@ -1,21 +1,34 @@
 import { useRoute } from "@react-navigation/native"
+import { useEffect, useState } from "react";
 import { Image, ScrollView, StyleSheet, Text, View } from "react-native"
+import { getUserByName } from "../services/user.service";
 
-interface UserData {
-    user: {
-        name: string;
-        email: string;
-        address: {
-            city: string
-        }
-    }
+
+interface Name {
+    name: string
 }
 
 const User = () => {
 
+    const [user, setUser] = useState({ name: undefined, address: undefined, email: undefined });
     const route = useRoute();
-    const user = route.params as UserData;
-    console.log(user.user)
+    const name = route.params as Name;
+
+
+    useEffect(() => {
+        if (name) {
+            getUserByName(name.name)
+                .then(resp => {
+                    setUser({
+                        name: resp[0].name,
+                        address: resp[0].address.city,
+                        email: resp[0].email
+                    });
+                    console.log("rsp ")
+                })
+        }
+    }, []);
+
     return (
         <View style={styles.container}>
             <View style={styles.containerHead}>
@@ -28,15 +41,11 @@ const User = () => {
                     />
                 </View>
                 <View style={styles.column}>
-                    {user &&
-                        <View style={{marginTop:10}}>
-                            <Text style={{fontSize:18}}>{user.user.name}</Text>
-                            <Text style={{fontSize:16}}>{user.user.address.city}</Text>
-                            <Text style={{fontSize:16}}>{user.user.email}</Text>
-                        </View>
-
-                    }
-
+                    <View style={{ marginTop: 10 }}>
+                        <Text style={{ fontSize: 18 }}>{user.name}</Text>
+                        <Text style={{ fontSize: 16 }}>{user.address}</Text>
+                        <Text style={{ fontSize: 16 }}>{user.email}</Text>
+                    </View>
                 </View>
             </View>
             <ScrollView style={styles.containerBottom}>
@@ -53,7 +62,7 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     containerHead: {
-        flex:0.5,
+        flex: 0.5,
         flexDirection: 'row', // Imposta la direzione del layout su "row"
         justifyContent: 'space-between', // Distribuisci gli elementi lungo la riga in modo uniforme
         // alignItems: 'center', // Allinea gli elementi verticalmente al centro
@@ -61,10 +70,10 @@ const styles = StyleSheet.create({
         paddingVertical: 5, // Spazio verticale tra le righe
         borderWidth: 1, // Bordo per visualizzare i confini della riga (opzionale)
         borderColor: 'gray', // Colore del bordo (opzionale)
-        backgroundColor:'yellow'
+        backgroundColor: 'yellow'
     },
     containerBottom: {
-        flex:1
+        flex: 1
     },
     column: {
         flex: 1, // Imposta la flessibilità delle colonne in modo che si espandano per riempire lo spazio disponibile
