@@ -14,7 +14,6 @@ const User = () => {
     const route = useRoute();
     const name = route.params as Name;
 
-
     useEffect(() => {
         if (name) {
             getUserByName(name.name)
@@ -24,7 +23,6 @@ const User = () => {
                         address: resp[0].address.city,
                         email: resp[0].email
                     });
-                    console.log("rsp ")
                 })
         }
     }, []);

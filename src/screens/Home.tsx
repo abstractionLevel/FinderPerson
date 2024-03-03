@@ -6,12 +6,10 @@ const HomeScreen = ({ navigation }: any) => {
     const [searchInput, setSearchInput] = useState('');
 
     const handleSearch = () => {
-        console.log(`Ricerca utente: ${searchInput}`);
+        navigation.navigate("User",{name:searchInput})
+
     };
 
-    const handleFindAllUsers = () => {
-        console.log('Ricerca di tutti gli utenti...');
-    };
     return (
         <View style={styles.container}>
             <View style={styles.searchContainer}>
