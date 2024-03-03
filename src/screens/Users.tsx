@@ -1,20 +1,27 @@
 import { useEffect, useState } from "react";
-import { FlatList, StyleSheet, Text, View } from "react-native"
+import { FlatList, StyleSheet, Text, TouchableOpacity, View } from "react-native"
 import { getUsers } from "../services/user.service";
 
-const Users = () => {
+const Users = ({ navigation }: any) => {
 
     const [users, setUsers] = useState([]);
 
     type itemProps = {
-        name:string,
-        email:string
+        name: string,
+        email: string,
     }
 
-    const ItemCard  = (user:itemProps) => (
+    const onPressItem = (user: itemProps):void => {
+        navigation.navigate("User",{user:user})
+    }
+
+    const ItemCard = (user: itemProps) => (
         <View style={styles.item}>
-            <Text style={styles.label}>{user.name}</Text>
-            <Text>{user.email}</Text>
+            <TouchableOpacity onPress={()=>onPressItem(user)} >
+                <Text style={styles.label}>{user.name}</Text>
+                <Text>{user.email}</Text>
+            </TouchableOpacity>
+
         </View>
     );
 
@@ -26,8 +33,8 @@ const Users = () => {
         <View style={styles.container}>
             <FlatList
                 data={users}
-                renderItem={({item}) => <ItemCard {...item} />}
-                keyExtractor={(item:any) => item.name}
+                renderItem={({ item }) => <ItemCard {...item} />}
+                keyExtractor={(item: any) => item.name}
             />
         </View>
     )
@@ -35,7 +42,7 @@ const Users = () => {
 
 const styles = StyleSheet.create({
     container: {
-        flex:1,
+        flex: 1,
 
     },
     item: {
@@ -45,7 +52,7 @@ const styles = StyleSheet.create({
         marginHorizontal: 16,
     },
     label: {
-        fontSize:32,
+        fontSize: 32,
     }
 })
 export default Users;

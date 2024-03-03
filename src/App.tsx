@@ -28,6 +28,7 @@ import {
 } from 'react-native/Libraries/NewAppScreen';
 import HomeScreen from './screens/Home';
 import Users from './screens/Users';
+import User from './screens/User';
 
 type SectionProps = PropsWithChildren<{
 	title: string;
@@ -79,6 +80,10 @@ function App(): React.JSX.Element {
 				<Stack.Screen
 					name="Users"
 					component={Users}
+				/>
+				<Stack.Screen
+					name="User"
+					component={User}
 				/>
 			</Stack.Navigator>
 		</NavigationContainer>
